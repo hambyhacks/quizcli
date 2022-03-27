@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 	"time"
@@ -29,7 +30,13 @@ func main() {
 	if err != nil {
 		handleError("Failed to parse the provided .csv file.")
 	}
+
+	// Initialize problems and randomize the order using rand.Shuffle()
 	problems := parseLines(lines)
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(problems), func(i, j int) {
+		problems[i], problems[j] = problems[j], problems[i]
+	})
 
 	// Implement timer
 	timer := time.NewTimer(time.Duration(*timeLimit) * time.Second)
@@ -41,7 +48,7 @@ problemLoop:
 		answerCh := make(chan string)
 		go func() {
 			var answer string
-			fmt.Scanf("%s", &answer)
+			fmt.Scanf("%s\n", &answer)
 			answerCh <- answer
 		}()
 
