@@ -16,8 +16,8 @@ type Problems struct {
 }
 
 func main() {
-	csvFileName := flag.String("csv", "problems.csv", ".csv file that is in the format of 'question,answer'.")
-	timeLimit := flag.Int("limit", 30, "time limit for the quiz in seconds.")
+	csvFileName := flag.String("csv", "D:/Projects/QuizCLI/problems.csv", ".csv file that is in the format of 'question,answer'.")
+	timeLimit := flag.Int("limit", 300, "time limit for the quiz in seconds.")
 	flag.Parse()
 
 	file, err := os.Open(*csvFileName)
@@ -63,6 +63,8 @@ problemLoop:
 		}
 	}
 	fmt.Printf("You scored %d out of %d.\n", correct, len(problems))
+	fmt.Print("\nPress ENTER key to exit the program.")
+	fmt.Scanln()
 }
 
 func parseLines(lines [][]string) []Problems {
